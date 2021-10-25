@@ -8,9 +8,11 @@
 
     {{-- 編集・削除ボタン --}}
     <div>
+        <!-- 変数ボタン -->
         <a href="{{ url('users/'.$user->id.'/edit') }}" class="btn btn-primary">
             {{ __('Edit') }}
         </a>
+        <!-- 削除ボタン -->
         @component('components.btn-del')
             @slot('table', 'users')
             @slot('id', $user->id)

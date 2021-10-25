@@ -17,16 +17,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 
-// Users
-// Route::resource('users', [App\Http\Controllers\QandAController::class, 'update''UserController');
-// 上記のresourceの内容を個別に定義した場合.
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-Route::post('/users', [UserController::class, 'store'])->name('users.store');
-    
-Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
-Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::post('/users/{user}', [UserController::class, 'update'])->name('users.update');// PUTよりはPOSTの方が良い.
-Route::delete('/users/{user}', [UserController::class, 'v'])->name('users.destroy');
+// 認証.
+Route::middleware(['auth'])->group(function () {
+    // Users
+    // Route::resource('users', [App\Http\Controllers\QandAController::class, 'update''UserController');
+    // 上記のresourceの内容を個別に定義した場合.
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::post('/users/{user}', [UserController::class, 'update'])->name('users.update');// PUTよりはPOSTの方が良い.
+    Route::delete('/users/{user}', [UserController::class, 'v'])->name('users.destroy');
+
+});
+
+require __DIR__.'/auth.php';
+
